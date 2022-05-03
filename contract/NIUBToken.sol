@@ -3,7 +3,7 @@ pragma solidity 0.8.13;
 // ----------------------------------------------------------------------------
 // 'NIUBToken' token contract
 //
-// Deployed to : 0x0
+// Deployed to : 0xa2CE818206dBd28f7952f17069B923c1cB63F6f9
 // Symbol      : NIUB
 // Name        : NIUBToken
 // Total supply: 100000000
