@@ -147,7 +147,7 @@ contract NIUBToken is ERC20Interface, Owned, SafeMath {
     constructor() {
         symbol = "NIUB";
         name = "NIUBToken";
-        decimals = 0;
+        decimals = 18;
         _totalSupply = 100000000;
         balances[0xa2CE818206dBd28f7952f17069B923c1cB63F6f9] = _totalSupply;
         emit Transfer(
