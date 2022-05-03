@@ -9,7 +9,7 @@ pragma solidity 0.8.13;
 // Symbol      : NIUB
 // Name        : NIUBToken
 // Total supply: 100000000
-// Decimals    : 18
+// Decimals    : 2
 //
 // Enjoy.
 //
@@ -147,8 +147,8 @@ contract NIUBToken is ERC20Interface, Owned, SafeMath {
     constructor() {
         symbol = "NIUB";
         name = "NIUBToken";
-        decimals = 18;
-        _totalSupply = 100000000;
+        decimals = 2;
+        _totalSupply = 10000000000;
         balances[0xa2CE818206dBd28f7952f17069B923c1cB63F6f9] = _totalSupply;
         emit Transfer(
             address(0),
