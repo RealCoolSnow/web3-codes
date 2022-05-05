@@ -1,5 +1,12 @@
 {
   "name": "hardhat-sample",
+  "scripts": {
+    "accounts": "npx hardhat accounts",
+    "compile": "npx hardhat compile",
+    "deploy-local": "npx hardhat run scripts/deploy.ts --network localhost",
+    "node": "npx hardhat node",
+    "test": "npx hardhat test"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
