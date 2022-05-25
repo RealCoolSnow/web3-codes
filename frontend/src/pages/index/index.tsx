@@ -1,46 +1,63 @@
 import React, { useEffect } from 'react'
-import Logo from '@/components/Logo'
-import { showAlert } from '@/utils/util'
-import { helloGet } from '@/service/api'
 import './index.css'
-import Counter from '@/components/Counter'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import LocaleSwitch from '@/components/LocaleSwitch'
+import { ethers } from 'ethers'
+import { showAlert } from '@/utils/util'
+import { daiContract, web3Provider } from '@/utils/ethers-util'
 
 const Index = () => {
-  const { t } = useTranslation()
   useEffect(() => {
     console.log('app created')
   }, [])
-  const networkTest = () => {
-    console.log('network')
-    helloGet()
-      .then((res) => {
-        showAlert(res)
-      })
-      .catch((err) => {
-        showAlert(err)
-      })
+  const requestAccount = async () => {
+    const account = await web3Provider.send('eth_requestAccounts', [])
+    const signer = web3Provider.getSigner()
+    console.log(account, signer)
+    showAlert(`wallet address: ${account}`)
   }
-  return (
-    <div className="flex flex-col items-center h-screen bg-gray-700">
-      <LocaleSwitch />
-      <Logo />
-      {/* <img src="/logo.svg" className="w-40 h-40" alt="logo" /> */}
-      <div className="flex items-center text-white">
-        <Link to="/about" className="ml-6">
-          {t('about')}
-        </Link>
-      </div>
-      <div className="bg-white w-3/4 p-4 rounded mt-4">
-        <Counter />
-        <div onClick={networkTest} className="btn bg-blue-500 mt-2">
-          Network Test
-        </div>
-      </div>
-    </div>
-  )
+  const getBlockNumber = async () => {
+    const blockNumber = await web3Provider.getBlockNumber()
+    showAlert(`blockNumber: ${blockNumber}`)
+  }
+  const getBalance = async () => {
+    const balance = await web3Provider.getBalance('ethers.eth')
+    const balanceETH = ethers.utils.formatEther(balance)
+    showAlert(`balance: ${balanceETH}`)
+  }
+  const functionList = [
+    { f: requestAccount, data: '' },
+    { f: getBlockNumber, data: '' },
+    { f: getBalance, data: '' },
+    {
+      f: function daiContract_name() {
+        daiContract.name().then((res: any) => {
+          alert(res)
+        })
+      },
+      data: '',
+    },
+    {
+      f: function daiContract_balanceOf() {
+        daiContract.balanceOf('ricmoo.firefly.eth').then((balance: any) => {
+          alert(ethers.utils.formatUnits(balance, 18))
+        })
+      },
+      data: '',
+    },
+  ]
+
+  const functionView = functionList.map((item) => {
+    return (
+      <li
+        onClick={item.f}
+        key={item.f.name}
+        className="border-b border-gray-300 p-2 active:text-blue-300"
+      >
+        {item.f.name}
+      </li>
+    )
+  })
+
+  return <ul className="p-2">{functionView}</ul>
 }
 
 export default Index
